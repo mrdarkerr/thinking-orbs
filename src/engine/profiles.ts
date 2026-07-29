@@ -12,9 +12,10 @@ export interface ModeOpts {
 const COUNT_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['latRings', 'lonDensity'],
   ['rings', 'lonDensity'],
-  ['lanes', 'segs']
+  ['lanes', 'segs'],
+  ['uCount', 'vCount']
 ];
-const COUNT_KEYS = ['orbitN', 'ghostN'] as const;
+const COUNT_KEYS = ['orbitN', 'ghostN', 'swarmN'] as const;
 const ICON_DENSITY_KEYS = ['iconD'] as const;
 
 // Every key that sets a dot's rendered radius — scaling all of them keeps
@@ -115,5 +116,29 @@ export const BASE_PROFILES: Record<string, ModeOpts> = {
     rDot: 0.021,
     iconD: 1,
     rMin: 0.25
+  },
+  torus: {
+    uCount: 30,
+    vCount: 9,
+    rBase: 0.6,
+    rDepth: 1.5,
+    rActive: 0.55,
+    rsPow: 0.6,
+    rMin: 0.3
+  },
+  branch: {
+    rBase: 0.52,
+    rDepth: 1.2,
+    rActive: 0.65,
+    rsPow: 0.6,
+    rMin: 0.3
+  },
+  delegate: {
+    swarmN: 112,
+    rBase: 0.55,
+    rDepth: 1.5,
+    rActive: 0.9,
+    rsPow: 0.6,
+    rMin: 0.3
   }
 };

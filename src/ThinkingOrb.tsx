@@ -8,15 +8,18 @@ import { useEffect, useRef } from 'react';
 import { MODE_DRAWS } from './engine/registry';
 import { resolvePreset } from './presets';
 import { useReducedMotion, useResolvedDark } from './theme';
-import type { ThinkingOrbProps } from './types';
+import type { OrbState, ThinkingOrbProps } from './types';
 
-const LABELS: Record<string, string> = {
+const LABELS: Record<OrbState, string> = {
   working: 'Working…',
   searching: 'Searching…',
   solving: 'Solving…',
   listening: 'Listening…',
   composing: 'Composing…',
-  shaping: 'Shaping…'
+  shaping: 'Shaping…',
+  reflecting: 'Reflecting…',
+  planning: 'Planning…',
+  delegating: 'Delegating…'
 };
 
 export function ThinkingOrb({
