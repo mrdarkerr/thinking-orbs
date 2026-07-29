@@ -117,6 +117,9 @@ export const drawBranch: ModeDraw = (ctx, size, t, dark, o) => {
   const evaluating = phase >= 1.5 && phase < 2.6;
   const selection = phase < 2.6 ? 0 : phase < 3.2 ? smoothstep((phase - 2.6) / 0.6) : 1;
   const reset = phase < 4.2 ? 0 : smoothstep((phase - 4.2) / 1);
+  // Neutralise the old winner before the cycle wraps. The next cycle picks a
+  // different route, so carrying selection size/ink across the boundary pops.
+  const committed = selection * (1 - reset);
   const frontier = evaluating ? (phase - 1.5) / 1.1 : -1;
   const dimFloor = o.dimFloor ?? 0.28;
   const idleFloor = o.idleFloor ?? 0.12;
@@ -131,16 +134,15 @@ export const drawBranch: ModeDraw = (ctx, size, t, dark, o) => {
       const f = di / (edgeDots + 1);
       const pathProgress = (node.level - 1 + f) / depth;
       const visible = smoothstep((growth - pathProgress + 0.07) / 0.14);
-      if (visible <= 0.01) continue;
 
       const dir = slerp(parent.dir, node.dir, f);
       const [x, y, z] = pt(dir[0], dir[1], dir[2]);
       const zDepth = (z + 1) / 2;
       const pulse = frontier < 0 ? 0 : Math.exp(-((pathProgress - frontier) ** 2) / 0.018);
-      const choiceAlpha = selected ? 1 : 1 - selection * (1 - dimFloor);
-      // Keep a faint complete tree underneath growth/reset. A loader should
-      // never collapse to a lone pixel, especially in the 20px preset.
-      const alpha = Math.max(idleFloor, visible * choiceAlpha * (1 - reset * 0.55));
+      const choiceAlpha = selected ? 1 : 1 - committed * (1 - dimFloor);
+      // Keep the complete tree at idleFloor through both sides of the wrap;
+      // growth and selection rise above that stable ghost without a hard reset.
+      const alpha = Math.max(idleFloor, visible * choiceAlpha * (1 - reset));
 
       dots.push({
         x,
@@ -149,9 +151,9 @@ export const drawBranch: ModeDraw = (ctx, size, t, dark, o) => {
         r:
           ((o.rBase ?? 0.52) +
             (o.rDepth ?? 1.2) * zDepth +
-            (o.rActive ?? 0.65) * (pulse + (selected ? selection * 0.55 : 0))) *
+            (o.rActive ?? 0.65) * (pulse + (selected ? committed * 0.55 : 0))) *
           rs,
-        white: 0.68 - 0.52 * zDepth - 0.14 * pulse - (selected ? 0.1 * selection : 0),
+        white: 0.68 - 0.52 * zDepth - 0.14 * pulse - (selected ? 0.1 * committed : 0),
         a: alpha * (0.52 + 0.48 * zDepth),
       });
     }
@@ -164,8 +166,8 @@ export const drawBranch: ModeDraw = (ctx, size, t, dark, o) => {
     const selected = ni === 0 || isWinnerPrefix(node.code, winner);
     const [x, y, z] = pt(node.dir[0], node.dir[1], node.dir[2]);
     const zDepth = (z + 1) / 2;
-    const choiceAlpha = selected ? 1 : 1 - selection * (1 - dimFloor);
-    const alpha = ni === 0 ? 1 : Math.max(idleFloor, visible * choiceAlpha * (1 - reset * 0.55));
+    const choiceAlpha = selected ? 1 : 1 - committed * (1 - dimFloor);
+    const alpha = ni === 0 ? 1 : Math.max(idleFloor, visible * choiceAlpha * (1 - reset));
 
     dots.push({
       x,
@@ -174,9 +176,9 @@ export const drawBranch: ModeDraw = (ctx, size, t, dark, o) => {
       r:
         ((o.rBase ?? 0.52) +
           (o.rDepth ?? 1.2) * zDepth +
-          (o.rActive ?? 0.65) * (0.55 + (selected ? selection * 0.45 : 0))) *
+          (o.rActive ?? 0.65) * (0.55 + (selected ? committed * 0.45 : 0))) *
         rs,
-      white: 0.58 - 0.48 * zDepth - (selected ? 0.13 * selection : 0),
+      white: 0.58 - 0.48 * zDepth - (selected ? 0.13 * committed : 0),
       a: alpha,
     });
   }

@@ -82,13 +82,13 @@ const PRESETS: Record<ModeKey, Record<OrbSize, Preset>> = {
       speed: 1,
       count: 1,
       size: 1,
-      extra: { treeDepth: 3, edgeDots: 4, spread: 0.82, dimFloor: 0.28, idleFloor: 0.12 }
+      extra: { treeDepth: 3, edgeDots: 4, spread: 0.82, dimFloor: 0.28, idleFloor: 0.22 }
     },
     20: {
       speed: 1.18,
       count: 1,
       size: 1.9,
-      extra: { treeDepth: 2, edgeDots: 2, spread: 0.84, dimFloor: 0.5, idleFloor: 0.24 }
+      extra: { treeDepth: 2, edgeDots: 2, spread: 0.84, dimFloor: 0.5, idleFloor: 0.3 }
     }
   },
   delegate: {
