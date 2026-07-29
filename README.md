@@ -1,6 +1,6 @@
 # thinking-orbs
 
-Dotted thought-orb loading indicators for AI & agent UIs. Six hand-tuned animated states, each shipped at two purpose-tuned sizes, rendered on a plain 2D canvas — no WebGL, no filters, works identically in Chrome, Safari and Firefox.
+Dotted thought-orb loading indicators for AI & agent UIs. Nine hand-tuned animated states, each shipped at two purpose-tuned sizes, rendered on a plain 2D canvas — no WebGL, no filters, works identically in Chrome, Safari and Firefox.
 
 [Live demo](https://orbs.jakubantalik.com) · [Repository](https://github.com/Jakubantalik/thinking-orbs) · [Report an issue](https://github.com/Jakubantalik/thinking-orbs/issues)
 
@@ -22,7 +22,7 @@ function Status() {
 
 ## States
 
-Six verbs an agent can be doing, each a distinct animation:
+Nine verbs an agent can be doing, each a distinct animation:
 
 ```tsx
 <ThinkingOrb state="working" />    {/* particles on tilted orbits */}
@@ -31,6 +31,9 @@ Six verbs an agent can be doing, each a distinct animation:
 <ThinkingOrb state="listening" />  {/* a waveform rolls through the rings */}
 <ThinkingOrb state="composing" />  {/* an undulating multi-band sash */}
 <ThinkingOrb state="shaping" />    {/* dotted outline: circle → triangle → square */}
+<ThinkingOrb state="reflecting" /> {/* a dotted torus circulates through itself */}
+<ThinkingOrb state="planning" />   {/* a decision tree grows, tests and commits */}
+<ThinkingOrb state="delegating" /> {/* one shell dispatches into child swarms */}
 ```
 
 ## Sizes

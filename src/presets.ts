@@ -1,4 +1,4 @@
-// The shipped tunings: six states × two sizes, baked from the inkform
+// The shipped tunings: nine states × two sizes, baked from the inkform
 // mini-page tuning session. `count`/`size` are multipliers over the base
 // fine profiles; `speed` multiplies the shared clock. Resolved once per
 // (state, size) pair and cached — the render loop sees plain numbers.
@@ -7,7 +7,16 @@ import type { ModeOpts } from './engine/profiles';
 import { BASE_PROFILES, scaleCounts, scaleRadii } from './engine/profiles';
 import type { OrbSize, OrbState } from './types';
 
-export type ModeKey = 'orbits' | 'globe' | 'rubik' | 'wave' | 'ribbon' | 'morph';
+export type ModeKey =
+  | 'orbits'
+  | 'globe'
+  | 'rubik'
+  | 'wave'
+  | 'ribbon'
+  | 'morph'
+  | 'torus'
+  | 'branch'
+  | 'delegate';
 
 export const STATE_TO_MODE: Record<OrbState, ModeKey> = {
   working: 'orbits',
@@ -15,7 +24,10 @@ export const STATE_TO_MODE: Record<OrbState, ModeKey> = {
   solving: 'rubik',
   listening: 'wave',
   composing: 'ribbon',
-  shaping: 'morph'
+  shaping: 'morph',
+  reflecting: 'torus',
+  planning: 'branch',
+  delegating: 'delegate'
 };
 
 interface Preset {
@@ -50,6 +62,48 @@ const PRESETS: Record<ModeKey, Record<OrbSize, Preset>> = {
   morph: {
     64: { speed: 2.405, count: 0.54, size: 0.395, extra: { spread: 1.45 } },
     20: { speed: 2.08, count: 0.53, size: 1.011, extra: { spread: 1.45 } }
+  },
+  torus: {
+    64: {
+      speed: 1,
+      count: 1,
+      size: 1,
+      extra: { major: 0.64, minor: 0.36, tilt: 1.02, spread: 0.8 }
+    },
+    20: {
+      speed: 1.15,
+      count: 0.16,
+      size: 2.15,
+      extra: { major: 0.7, minor: 0.3, tilt: 1.08, spread: 0.82 }
+    }
+  },
+  branch: {
+    64: {
+      speed: 1,
+      count: 1,
+      size: 1,
+      extra: { treeDepth: 3, edgeDots: 4, spread: 0.82, dimFloor: 0.28, idleFloor: 0.22 }
+    },
+    20: {
+      speed: 1.18,
+      count: 1,
+      size: 1.9,
+      extra: { treeDepth: 2, edgeDots: 2, spread: 0.84, dimFloor: 0.5, idleFloor: 0.3 }
+    }
+  },
+  delegate: {
+    64: {
+      speed: 1,
+      count: 1,
+      size: 1.1,
+      extra: { parentR: 0.39, rootR: 0.14, childR: 0.105, childDistance: 0.32, packetTrail: 2 }
+    },
+    20: {
+      speed: 1.25,
+      count: 0.29,
+      size: 2.3,
+      extra: { parentR: 0.36, rootR: 0.14, childR: 0.105, childDistance: 0.32, packetTrail: 1 }
+    }
   }
 };
 

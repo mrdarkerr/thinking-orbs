@@ -8,7 +8,10 @@ const STATES: Array<{ state: OrbState; blurb: string }> = [
   { state: 'solving', blurb: 'bands scramble, then click back' },
   { state: 'listening', blurb: 'a waveform rolls through the rings' },
   { state: 'composing', blurb: 'an undulating sash of bands' },
-  { state: 'shaping', blurb: 'circle → triangle → square' }
+  { state: 'shaping', blurb: 'circle → triangle → square' },
+  { state: 'reflecting', blurb: 'a torus circulates through itself' },
+  { state: 'planning', blurb: 'a decision tree grows, tests and commits' },
+  { state: 'delegating', blurb: 'one shell dispatches into child swarms' }
 ];
 
 export function App() {
@@ -23,7 +26,7 @@ export function App() {
   return (
     <div className="page">
       <header>
-        <span className="mono">THINKING-ORBS · SIX STATES · TWO SIZES · AUTO THEME</span>
+        <span className="mono">THINKING-ORBS · NINE STATES · TWO SIZES · AUTO THEME</span>
         <button className="mono theme-btn" type="button" onClick={() => setDark((d) => !d)}>
           {dark ? 'LIGHT' : 'DARK'}
         </button>

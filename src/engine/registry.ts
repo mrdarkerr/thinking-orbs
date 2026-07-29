@@ -3,10 +3,13 @@
 
 import type { ModeKey } from '../presets';
 import type { ModeDraw } from './types';
+import { drawBranch } from './branch';
+import { drawDelegate } from './delegate';
 import { drawGlobe, drawRubik, drawWave } from './lattice';
 import { drawMorph } from './morph';
 import { drawOrbits } from './orbits';
 import { drawRibbon } from './ribbon';
+import { drawTorus } from './torus';
 
 export const MODE_DRAWS: Record<ModeKey, ModeDraw> = {
   orbits: drawOrbits,
@@ -14,5 +17,8 @@ export const MODE_DRAWS: Record<ModeKey, ModeDraw> = {
   rubik: drawRubik,
   wave: drawWave,
   ribbon: drawRibbon,
-  morph: drawMorph
+  morph: drawMorph,
+  torus: drawTorus,
+  branch: drawBranch,
+  delegate: drawDelegate
 };

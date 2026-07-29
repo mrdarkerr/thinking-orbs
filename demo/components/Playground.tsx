@@ -5,7 +5,17 @@ import { cn } from '../lib/utils';
 import { CopyButton } from './CopyButton';
 import { PlayPauseToggle } from './PlayPauseToggle';
 
-const STATES: OrbState[] = ['working', 'searching', 'solving', 'listening', 'composing', 'shaping'];
+const STATES: OrbState[] = [
+  'working',
+  'searching',
+  'solving',
+  'listening',
+  'composing',
+  'shaping',
+  'reflecting',
+  'planning',
+  'delegating',
+];
 const SIZES: OrbSize[] = [64, 20];
 
 const SPEED_MIN = 25;
